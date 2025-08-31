@@ -11,7 +11,7 @@ const Card = (props: { inputText: string }) => {
         })
 
 
-    const cambiarColores = () => {
+    const changeColors = () => {
         setCardState((prev) => { 
             if (prev.isPressed) { 
                 return {
@@ -33,7 +33,7 @@ const Card = (props: { inputText: string }) => {
     return(
         <Pressable 
             style={[styles.pressableStyle, {backgroundColor: cardState.backColor}]}
-            onPress={cambiarColores}>
+            onPress={changeColors}>
 
             <Text style={[styles.cardTextStyle, {color: cardState.textColor}]}>{cardState.text}</Text>
 
