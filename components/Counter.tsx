@@ -1,57 +1,59 @@
-import React, { useState } from 'react'
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
-
+import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 const Counter = () => {
-  const [contador, setContador] = useState({ valor: 0 })
+  const [contador, setContador] = useState({ valor: 0 });
 
   const aumentar = () => {
-    setContador(prev => ({ valor: prev.valor + 1 }))
-  }
+    setContador((prev) => ({ valor: prev.valor + 1 }));
+  };
 
   return (
-    <View style = {styles.viewStyles}>
-      <Text>Contador ascendente: {contador.valor}</Text>
+    <View style={styles.viewStyles}>
+      <Text style={styles.textStyles}>
+        Contador ascendente: {contador.valor}
+      </Text>
 
       <View style={styles.buttonContainerStyle}>
-
-        <Button title="Incrementar" onPress={aumentar} />
-
+        <Pressable style={styles.buttonStyle} onPress={aumentar}>
+          <Text style={styles.buttonTextStyle}>Incrementar</Text>
+        </Pressable>
       </View>
-      
     </View>
-  )
-}
-
+  );
+};
 
 const styles = StyleSheet.create({
   viewStyles: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     width: "100%",
   },
   textStyles: {
-    color: '#ffff',
-    fontSize: 22
+    color: "black",
+    fontSize: 22,
+    marginBottom: 16,
   },
   buttonStyle: {
-    backgroundColor: 'rgba(32, 145, 236, 1)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '4%'
+    backgroundColor: "rgba(32, 145, 236, 1)",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
   },
-  buttonTextStyle:{
-    color:"white",
-    fontSize: 14,
-    fontWeight: 'bold'
+  buttonTextStyle: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
-  buttonContainerStyle:{
-    flexDirection: 'row',
-    marginTop: '2%',
-    gap: '2%'
-  }
-})
+  buttonContainerStyle: {
+    flexDirection: "row",
+    marginTop: 10,
+    gap: 12,
+  },
+});
 
-export default Counter
+export default Counter;

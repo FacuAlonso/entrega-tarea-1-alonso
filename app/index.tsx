@@ -5,8 +5,7 @@ export default function Index() {
   return (
     <View style={styles.viewStyle}>
       <Text>¡Bienvenido!</Text>
-      <Link style={styles.launchPressableStyle} href={'/contador'}>
-      
+      <Link style={styles.launchPressableStyle} href={'/(tabs)/contador'}>
         <Text style={styles.launchButtonTextStyle}>INGRESAR</Text>
     </Link>
     </View>

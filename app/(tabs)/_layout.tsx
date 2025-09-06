@@ -1,7 +1,7 @@
 import { Tabs } from "expo-router";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-export default function RootLayout() {
+export default function TabsLayout() {
   return (<Tabs>
         <Tabs.Screen name="contador" options={{ title: 'Contador',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="sort-numeric-asc" color={color} />}}/>
