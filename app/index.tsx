@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function Index() {
   return (
     <View style={styles.viewStyle}>
-      <Text>¡Bienvenido!</Text>
+      <Text style={{fontSize:25, fontWeight:'bold'}}>¡Bienvenido!</Text>
       <Link style={styles.launchPressableStyle} href={'/(tabs)/contador'}>
         <Text style={styles.launchButtonTextStyle}>INGRESAR</Text>
     </Link>
@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    gap: 20
   },
   launchButtonTextStyle:{
     color: 'white',
@@ -26,7 +25,10 @@ const styles = StyleSheet.create({
   },
   launchPressableStyle:{
     backgroundColor: '#0052b1ff',
-    padding: '5%',
+    paddingHorizontal: '8%',
+    paddingVertical: '4%',
+    borderRadius: 8,
+    marginVertical: '15%'
   }
 })
 

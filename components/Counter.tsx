@@ -11,7 +11,7 @@ const Counter = () => {
   return (
     <View style={styles.viewStyles}>
       <Text style={styles.textStyles}>
-        Contador ascendente: {contador.valor}
+        {contador.valor}
       </Text>
 
       <View style={styles.buttonContainerStyle}>
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
   },
   textStyles: {
     color: "black",
-    fontSize: 22,
-    marginBottom: 16,
+    fontSize: 50,
+    marginBottom: '10%',
   },
   buttonStyle: {
     backgroundColor: "rgba(32, 145, 236, 1)",
