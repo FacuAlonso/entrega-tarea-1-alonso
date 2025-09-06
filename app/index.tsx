@@ -1,14 +1,14 @@
-import { View, StyleSheet } from "react-native";
-import Card from "../components/Card";
+import { Link } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
   return (
     <View style={styles.viewStyle}>
-
-      <Card inputText='Tarjeta 1'/>
-      <Card inputText='Tarjeta 2'/>
-      <Card inputText='Tarjeta 3'/>
+      <Text>¡Bienvenido!</Text>
+      <Link style={styles.launchPressableStyle} href={'/contador'}>
       
+        <Text style={styles.launchButtonTextStyle}>INGRESAR</Text>
+    </Link>
     </View>
   );
 }
@@ -16,9 +16,18 @@ export default function Index() {
 const styles = StyleSheet.create({
   viewStyle:{
     flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 20
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 20
+  },
+  launchButtonTextStyle:{
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20
+  },
+  launchPressableStyle:{
+    backgroundColor: '#0052b1ff',
+    padding: '5%',
   }
 })
 
