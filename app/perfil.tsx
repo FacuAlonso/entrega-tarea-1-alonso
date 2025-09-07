@@ -1,14 +1,10 @@
-
 import Profile from "@/components/Profile";
 import { StyleSheet, View } from "react-native";
-
 
 export default function Perfil() {
   return (
     <View style={styles.viewStyle}>
-
       <Profile />
-      
     </View>
   );
 }

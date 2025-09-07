@@ -4,11 +4,9 @@ import Card from "../components/Card";
 export default function Tarjetas() {
   return (
     <View style={styles.viewStyle}>
-
       <Card inputText='Tarjeta 1'/>
       <Card inputText='Tarjeta 2'/>
       <Card inputText='Tarjeta 3'/>
-      
     </View>
   );
 }
