@@ -1,12 +1,13 @@
-import Counter from "@/components/Counter";
 import { View, StyleSheet } from "react-native";
+import Card from "../components/Card";
 
-
-export default function Contador() {
+export default function Tarjetas() {
   return (
     <View style={styles.viewStyle}>
 
-      <Counter/>
+      <Card inputText='Tarjeta 1'/>
+      <Card inputText='Tarjeta 2'/>
+      <Card inputText='Tarjeta 3'/>
       
     </View>
   );

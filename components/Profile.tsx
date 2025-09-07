@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Pressable, StyleSheet, Text, View } from 'react-native'
+import {Pressable, StyleSheet, Text, View, ViewBase } from 'react-native'
 
 
 const Profile = () => {
@@ -10,11 +10,11 @@ const Profile = () => {
   }
 
   return (
-    <View>
+    <View style={styles.viewStyle}>
       <Text style={styles.textStyle}> Nombre: {profile.name}</Text>
       <Text style={styles.textStyle}> Apellido: {profile.surname}</Text>
       <Pressable style={styles.pressableStyle}>
-        <Text style={styles.pressableTextStyle}>CAMBIAR NOMBRE</Text>
+        <Text style={styles.pressableTextStyle}>MODIFICAR NOMBRE</Text>
       </Pressable>
       
     </View>
@@ -29,12 +29,15 @@ const styles = StyleSheet.create({
   pressableStyle: {
     backgroundColor: '#097200ff',
     borderRadius: '5%',
-    margin: '5%',
     padding: '5%'
   },
   pressableTextStyle:{
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  viewStyle:{
+    gap: 25
   }
 })
 

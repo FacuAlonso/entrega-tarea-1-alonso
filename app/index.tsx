@@ -1,39 +1,24 @@
-import { useRouter } from "expo-router";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import Counter from "@/components/Counter";
+import { View, StyleSheet } from "react-native";
 
-export default function Index() {
-  const router = useRouter();
 
+export default function Contador() {
   return (
     <View style={styles.viewStyle}>
-      <Text style={{ fontSize: 25, fontWeight: "bold" }}>¡Bienvenido!</Text>
 
-      <Pressable
-        style={styles.launchPressableStyle}
-        onPress={() => router.replace("/(tabs)/contador")}
-      >
-        <Text style={styles.launchButtonTextStyle}>INGRESAR</Text>
-      </Pressable>
+      <Counter/>
+      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  viewStyle: {
+  viewStyle:{
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  launchButtonTextStyle: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  launchPressableStyle: {
-    backgroundColor: "#0052b1ff",
-    paddingHorizontal: "8%",
-    paddingVertical: "4%",
-    borderRadius: 8,
-    marginVertical: "15%",
-  },
-});
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 20
+  }
+})
+
+
