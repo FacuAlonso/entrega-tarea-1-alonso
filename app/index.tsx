@@ -10,8 +10,7 @@ export default function Index() {
 
       <Pressable
         style={styles.launchPressableStyle}
-        onPress={() => router.replace("/(tabs)/contador")}
-      >
+        onPress={() => router.replace("/(tabs)/contador")}>
         <Text style={styles.launchButtonTextStyle}>INGRESAR</Text>
       </Pressable>
     </View>
