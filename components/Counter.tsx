@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
   textStyles: {
     color: "black",
     fontSize: 50,
-    marginBottom: '10%',
+    marginBottom: '10%'
   },
   buttonStyle: {
-    backgroundColor: "rgba(32, 145, 236, 1)",
+    backgroundColor: "#1b0075ff",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+    userSelect: 'none'
   },
   buttonContainerStyle: {
     flexDirection: "row",

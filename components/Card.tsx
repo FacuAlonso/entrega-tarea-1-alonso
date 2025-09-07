@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
     cardTextStyle: {
         fontSize: 15,
         fontFamily: 'Calibri',
-        textAlign: 'center'
+        textAlign: 'center',
+        userSelect: 'none'
     },
     pressableStyle: {
         width: '70%',

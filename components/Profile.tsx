@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import {Pressable, StyleSheet, Text, View, ViewBase } from 'react-native'
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import {Pressable, StyleSheet, Text, View } from 'react-native'
 
 
 const Profile = () => {
@@ -10,11 +11,12 @@ const Profile = () => {
   }
 
   return (
-    <View style={styles.viewStyle}>
+    <View>
       <Text style={styles.textStyle}> Nombre: {profile.name}</Text>
       <Text style={styles.textStyle}> Apellido: {profile.surname}</Text>
       <Pressable style={styles.pressableStyle}>
-        <Text style={styles.pressableTextStyle}>MODIFICAR NOMBRE</Text>
+        <FontAwesome name='edit' size={24} color="white" />
+        <Text style={styles.pressableTextStyle}>Modificar</Text>
       </Pressable>
       
     </View>
@@ -23,21 +25,23 @@ const Profile = () => {
 
 const styles = StyleSheet.create({
   textStyle: {
-    fontSize: 20,
+    fontSize: 25,
     alignSelf: 'center',
   },
   pressableStyle: {
-    backgroundColor: '#097200ff',
-    borderRadius: '5%',
-    padding: '5%'
+    backgroundColor: '#1b0075ff',
+    borderRadius: 10,
+    padding: '4%',
+    marginTop: '30%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10
   },
   pressableTextStyle:{
     color: 'white',
     fontWeight: 'bold',
-    textAlign: 'center'
-  },
-  viewStyle:{
-    gap: 25
+    textAlign: 'center',
+    fontSize: 18
   }
 })
 

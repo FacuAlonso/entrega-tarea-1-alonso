@@ -2,7 +2,11 @@ import { Tabs } from "expo-router";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function TabsLayout() {
-  return (<Tabs screenOptions={{headerShown: false, animation: "shift"}}>
+  return (<Tabs screenOptions={
+    {headerShown: false, 
+    animation: "shift", 
+    tabBarActiveTintColor: '#1b0075ff'}
+    }>
 
         <Tabs.Screen name="index" options={{ title: 'Contador',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="sort-numeric-asc" color={color}/>}}/>
