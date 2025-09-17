@@ -17,5 +17,8 @@ export default function TabsLayout() {
         <Tabs.Screen name="perfil" options={{ title: 'Perfil',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color}/>}}/>
 
+        <Tabs.Screen name="galeria" options={{ title: 'Galería',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="photo" color={color}/>}}/>
+
   </Tabs>);
 }
