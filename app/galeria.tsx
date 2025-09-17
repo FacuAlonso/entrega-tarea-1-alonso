@@ -1,39 +1,8 @@
 import React, { useState } from "react";
 import {StyleSheet, View, Text, Image, TextInput, Pressable, Modal} from "react-native";
 import GalleryList from "@/components/Gallery";
-
-type Producto = {
-  id: string;
-  titulo: string;
-  precio: string;
-  descripcion: string;
-  imagen: any;
-  uri?: string;
-};
-
-const DATA: Producto[] = [
-  {
-    id: "1",
-    titulo: "Mouse Logitech G502",
-    precio: "$45.000",
-    descripcion: "Mouse gamer de alta precisión",
-    imagen: require("../assets/itemPictures/mouseLogitech.png"), 
-  },
-  {
-    id: "2",
-    titulo: "Monitor Gamer Asus",
-    precio: "$295.000",
-    descripcion: "Monitor de 144Hz IPS gamer",
-    imagen: { uri: "https://i.imgur.com/yi3kFhe.png" }, 
-  },
-  {
-    id: "3",
-    titulo: "Auriculares Steelseries Arctis 7 Wireless",
-    precio: "$150.500",
-    descripcion: "Auriculares inalámbricos - PC Gaming",
-    imagen: { uri: "https://i.imgur.com/Z4dG9Nv.png" }, 
-  },
-];
+import DATA from "../data/itemData";
+type Producto = {id: string; titulo: string; precio: string; descripcion: string; imagen: any};
 
 export default function Galeria() {
   const [filtro, setFiltro] = useState("");
@@ -41,9 +10,10 @@ export default function Galeria() {
   const [modalVisible, setModalVisible] = useState(false);
   const [resizeMode, setResizeMode] = useState<"cover" | "contain" | "stretch">("cover");
   const [favoritos, setFavoritos] = useState<string[]>([]);
+  
 
-  const filtrar = DATA.filter(function (p) {
-    return p.titulo.toLowerCase().includes(filtro.toLowerCase());
+  const filtrar = DATA.filter(function (item) {
+    return item.titulo.toLowerCase().includes(filtro.toLowerCase());
   });
 
   const toggleFavorito = function (id: string) {
@@ -84,7 +54,7 @@ export default function Galeria() {
       {productoSeleccionado !== null && (
         <Modal
           visible={modalVisible}
-          animationType="slide"
+          animationType="fade"
           onRequestClose={function () {
             setModalVisible(false);
           }}
@@ -185,7 +155,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 2,
     alignSelf: "flex-start",
-    marginLeft: "20%",
+    marginLeft: "20%"
   },
 
   buttonText: { color: "white", 

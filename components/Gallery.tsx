@@ -28,7 +28,7 @@ export default function GalleryList({ data, favoritos, onSelect, onFavorito }: P
         }}
         style={[
           styles.card,
-          favoritos.includes(item.id) && { borderColor: "gold", borderWidth: 2 },
+          favoritos.includes(item.id) ? { borderColor: "gold", borderWidth: 2 } : ''
         ]}
       >
         <Image source={item.imagen} style={styles.itemImage} />
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   card: {
     padding: 10,
     marginBottom: 10,
-    backgroundColor: "#f1f1f1",
+    backgroundColor: "#f0f0f0ff",
     borderRadius: 8,
     alignItems: "center",
   },
