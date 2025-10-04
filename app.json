@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "tarea1",
-    "slug": "tarea1",
+    "name": "tarea4",
+    "slug": "tarea4",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "tarea1",
+    "scheme": "tarea4",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
