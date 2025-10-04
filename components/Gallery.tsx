@@ -1,19 +1,12 @@
 import React from "react";
 import { FlatList, Pressable, Image, Text, StyleSheet } from "react-native";
-
-type Producto = {
-  id: string;
-  titulo: string;
-  precio: string;
-  descripcion: string;
-  imagen: any;
-};
+import { Producto } from "../data/itemData";
 
 type Props = {
   data: Producto[];
-  favoritos: string[];
+  favoritos: number[];
   onSelect: (item: Producto) => void;
-  onFavorito: (id: string) => void;
+  onFavorito: (id: number) => void;
 };
 
 export default function GalleryList({ data, favoritos, onSelect, onFavorito }: Props) {
@@ -31,9 +24,9 @@ export default function GalleryList({ data, favoritos, onSelect, onFavorito }: P
           favoritos.includes(item.id) ? { borderColor: "gold", borderWidth: 2 } : ''
         ]}
       >
-        <Image source={item.imagen} style={styles.itemImage} />
-        <Text style={styles.itemTitle}>{item.titulo}</Text>
-        <Text style={styles.itemPrice}>{item.precio}</Text>
+        <Image source={{uri: item.image}} style={styles.itemImage} />
+        <Text style={styles.itemTitle}>{item.name}</Text>
+        <Text style={styles.itemPrice}>${item.price}</Text>
       </Pressable>
     );
   };
@@ -44,7 +37,7 @@ export default function GalleryList({ data, favoritos, onSelect, onFavorito }: P
       data={data}
       renderItem={renderItem}
       keyExtractor={function (item) {
-        return item.id;
+        return item.id.toString();
       }}
       numColumns={2}
       ListEmptyComponent={

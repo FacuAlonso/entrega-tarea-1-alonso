@@ -1,33 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {StyleSheet, View, Text, Image, TextInput, Pressable, Modal} from "react-native";
 import GalleryList from "@/components/Gallery";
-import DATA from "../data/itemData";
-type Producto = {id: string; titulo: string; precio: string; descripcion: string; imagen: any};
+import { getProductos, Producto } from "../data/itemData";
 
 export default function Galeria() {
   const [filtro, setFiltro] = useState("");
+  const [productos, setProductos] = useState<Producto[]>([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [resizeMode, setResizeMode] = useState<"cover" | "contain" | "stretch">("cover");
-  const [favoritos, setFavoritos] = useState<string[]>([]);
+  const [favoritos, setFavoritos] = useState<number[]>([]);
+
+
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await getProductos();
+      setProductos(data);
+    };
+    loadData();
+  }, []);
   
 
-  const filtrar = DATA.filter(function (item) {
-    return item.titulo.toLowerCase().includes(filtro.toLowerCase());
-  });
+  const filtrar = productos.filter((item) =>
+    item.name.toLowerCase().includes(filtro.toLowerCase())
+  );
 
-  const toggleFavorito = function (id: string) {
-    setFavoritos(function (estadoAnterior) {
-      if (estadoAnterior.includes(id)) {
-        const nuevoEstado = estadoAnterior.filter(function (prevFavorito) {
-          return prevFavorito !== id;
-        });
-        return nuevoEstado;
-      } else {
-        const nuevoEstado = [...estadoAnterior, id];
-        return nuevoEstado;
-      }
-    });
+  const toggleFavorito = (id: number) => {
+    setFavoritos((prev) =>
+      prev.includes(id) ? prev.filter((fav) => fav !== id) : [...prev, id]
+    );
   };
 
   return (
@@ -70,12 +71,12 @@ export default function Galeria() {
             </Pressable>
 
             <Image
-              source={productoSeleccionado.imagen}
+              source={{uri: productoSeleccionado.image}}
               style={styles.modalImage}
               resizeMode={resizeMode}
             />
-            <Text style={styles.modalTitle}>{productoSeleccionado.titulo}</Text>
-            <Text>{productoSeleccionado.descripcion}</Text>
+            <Text style={styles.modalTitle}>{productoSeleccionado.name}</Text>
+            <Text>{productoSeleccionado.description}</Text>
 
             <View style={styles.buttonsRow}>
               <Pressable
