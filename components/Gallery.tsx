@@ -47,6 +47,9 @@ export default function GalleryList({ data, favoritos, onSelect, onFavorito }: P
         return item.id;
       }}
       numColumns={2}
+      ListEmptyComponent={
+        <Text style={styles.itemTitle}>No hay productos que coincidan con tu búsqueda</Text>
+      }
     />
   );
 }
@@ -63,6 +66,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     width: '45%',
+    minWidth: 150,
+    flexGrow: 1
   },
   itemImage: {
     width: 100,
