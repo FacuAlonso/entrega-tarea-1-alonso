@@ -1,24 +1,46 @@
-import React, { useState, useEffect } from "react";
-import {StyleSheet, View, Text, Image, TextInput, Pressable, Modal} from "react-native";
 import GalleryList from "@/components/Gallery";
+import React, { useEffect, useState } from "react";
+import { Image, Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { getProductos, Producto } from "../data/itemData";
 
 export default function Galeria() {
   const [filtro, setFiltro] = useState("");
   const [productos, setProductos] = useState<Producto[]>([]);
+  const [loading, setLoading] = useState(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [resizeMode, setResizeMode] = useState<"cover" | "contain" | "stretch">("cover");
   const [favoritos, setFavoritos] = useState<number[]>([]);
 
+  const loadData = async () => {
+  setLoading(true);
+  try {
+    const data = await getProductos();
+    setProductos(data);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
 
-  useEffect(() => {
-    const loadData = async () => {
-      const data = await getProductos();
+const loadData_sync = () => {
+  setLoading(true);
+  getProductos()
+    .then((data) => {
       setProductos(data);
-    };
-    loadData();
-  }, []);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+};
+
+useEffect(() => {
+  loadData();
+}, []);
   
 
   const filtrar = productos.filter((item) =>
@@ -50,6 +72,8 @@ export default function Galeria() {
           setModalVisible(true);
         }}
         onFavorito={toggleFavorito}
+        refreshing={loading}
+        onRefresh_handler={loadData}
       />
 
       {productoSeleccionado !== null && (
@@ -76,6 +100,7 @@ export default function Galeria() {
               resizeMode={resizeMode}
             />
             <Text style={styles.modalTitle}>{productoSeleccionado.name}</Text>
+            <Text style={[styles.modalTitle, {color: 'green'}]}>${productoSeleccionado.price}</Text>
             <Text>{productoSeleccionado.description}</Text>
 
             <View style={styles.buttonsRow}>

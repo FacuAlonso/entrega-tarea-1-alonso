@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Pressable, Image, Text, StyleSheet } from "react-native";
+import { FlatList, Image, Pressable, StyleSheet, Text } from "react-native";
 import { Producto } from "../data/itemData";
 
 type Props = {
@@ -7,9 +7,13 @@ type Props = {
   favoritos: number[];
   onSelect: (item: Producto) => void;
   onFavorito: (id: number) => void;
+  refreshing: boolean;
+  onRefresh_handler: () => void;
 };
 
-export default function GalleryList({ data, favoritos, onSelect, onFavorito }: Props) {
+export default function GalleryList({ 
+  data, favoritos, onSelect, onFavorito, refreshing, onRefresh_handler: onRefresh }: Props) 
+  {
   const renderItem = function ({ item }: { item: Producto }) {
     return (
       <Pressable
@@ -43,6 +47,8 @@ export default function GalleryList({ data, favoritos, onSelect, onFavorito }: P
       ListEmptyComponent={
         <Text style={styles.itemTitle}>No hay productos que coincidan con tu búsqueda</Text>
       }
+      refreshing={refreshing}
+      onRefresh={onRefresh}
     />
   );
 }
