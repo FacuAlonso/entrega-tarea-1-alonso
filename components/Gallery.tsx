@@ -40,22 +40,29 @@ export default function GalleryList({ data, favoritos, onSelect, onFavorito }: P
 
   return (
     <FlatList
+      style={styles.container}
       data={data}
       renderItem={renderItem}
       keyExtractor={function (item) {
         return item.id;
       }}
+      numColumns={2}
     />
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignSelf: "center",
+  },
   card: {
+    margin: 10,
     padding: 10,
     marginBottom: 10,
     backgroundColor: "#f0f0f0ff",
     borderRadius: 8,
     alignItems: "center",
+    width: '45%',
   },
   itemImage: {
     width: 100,
@@ -65,6 +72,7 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: 'center'
   },
   itemPrice: {
     fontSize: 14,
