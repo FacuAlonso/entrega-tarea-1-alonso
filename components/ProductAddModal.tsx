@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Modal, View, TextInput, Pressable, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { 
+  Modal, View, TextInput, Pressable, Text, 
+  StyleSheet, ActivityIndicator, Image, FlatList 
+} from "react-native";
 import { Producto, createProduct } from "../data/itemData"; 
 
 type Props = {
   visible: boolean;
-  onClose: () => void | Promise<void>;  // Acepta tanto funciones sync como async
+  onClose: () => void | Promise<void>;
   onAdded: (producto: Producto) => void;
 };
 
@@ -14,6 +17,13 @@ export default function ProductAddModal({ visible, onClose, onAdded }: Props) {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const defaultImages = [
+    "https://i.imgur.com/dk1YFG1.png",
+    "https://i.imgur.com/lJiFmDz.png",
+    "https://i.imgur.com/wA12Tmw.png",
+    "https://i.imgur.com/k0tpT8C.png"
+  ];
 
   const handleSubmit = async () => {
     if (!name.trim()) return;
@@ -42,18 +52,71 @@ export default function ProductAddModal({ visible, onClose, onAdded }: Props) {
         <View style={styles.container}>
           <Text style={styles.title}>Agregar producto</Text>
 
-          <TextInput placeholder="Título" value={name} onChangeText={setName} style={styles.input} />
-          <TextInput placeholder="Precio" value={price} onChangeText={setPrice} keyboardType="numeric" style={styles.input} />
-          <TextInput placeholder="Descripción" value={description} onChangeText={setDescription} style={[styles.input, { height: 80 }]} />
-          <TextInput placeholder="URL imagen" value={image} onChangeText={setImage} style={styles.input} />
+          <TextInput
+            placeholder="Título"
+            value={name}
+            onChangeText={setName}
+            style={styles.input}
+          />
+
+          <TextInput
+            placeholder="Precio"
+            value={price}
+            onChangeText={setPrice}
+            keyboardType="numeric"
+            style={styles.input}
+          />
+
+          <TextInput
+            placeholder="Descripción"
+            value={description}
+            onChangeText={setDescription}
+            style={[styles.input, { height: 80 }]}
+            multiline
+          />
+
+          <TextInput
+            placeholder="URL imagen (O elegir una abajo 👇)"
+            value={image}
+            onChangeText={setImage}
+            style={styles.input}
+          />
+
+          <FlatList
+            data={defaultImages}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item) => item}
+            style={{ marginVertical: 10 }}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => setImage(item)}>
+                <Image
+                  source={{ uri: item }}
+                  style={[
+                    styles.thumb,
+                    image === item && styles.thumbSelected
+                  ]}
+                />
+              </Pressable>
+            )}
+          />
 
           <View style={styles.row}>
-            <Pressable style={[styles.button, styles.cancel]} onPress={async () => { await onClose(); }}>
+            <Pressable
+              style={[styles.button, styles.cancel]}
+              onPress={async () => { await onClose(); }}
+            >
               <Text style={styles.buttonText}>Cancelar</Text>
             </Pressable>
 
-            <Pressable style={[styles.button, styles.save]} onPress={handleSubmit} disabled={loading}>
-              {loading ? <ActivityIndicator color="white" /> : <Text style={styles.buttonText}>Guardar</Text>}
+            <Pressable
+              style={[styles.button, styles.save]}
+              onPress={handleSubmit}
+              disabled={loading}
+            >
+              {loading
+                ? <ActivityIndicator color="white" />
+                : <Text style={styles.buttonText}>Guardar</Text>}
             </Pressable>
           </View>
         </View>
@@ -115,5 +178,18 @@ const styles = StyleSheet.create({
   buttonText: { 
     color: "white", 
     fontWeight: "bold" 
+  },
+
+  thumb: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    marginRight: 8,
+    borderWidth: 2,
+    borderColor: "transparent",
+  },
+
+  thumbSelected: {
+    borderColor: "#1b0075ff",
   },
 });
