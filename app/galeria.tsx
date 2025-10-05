@@ -1,7 +1,8 @@
-import GalleryList from "@/components/Gallery";
+import GalleryList from "../components/Gallery";
 import React, { useEffect, useState } from "react";
-import { Image, Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { getProductos, Producto } from "../data/itemData";
+import ProductModal from "../components/ProductModal"; // <-- nuevo import
 
 export default function Galeria() {
   const [filtro, setFiltro] = useState("");
@@ -9,39 +10,38 @@ export default function Galeria() {
   const [loading, setLoading] = useState(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [resizeMode, setResizeMode] = useState<"cover" | "contain" | "stretch">("cover");
   const [favoritos, setFavoritos] = useState<number[]>([]);
 
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const loadData = async () => {
-  setLoading(true);
-  try {
-    const data = await getProductos();
-    setProductos(data);
-  } catch (error) {
-    console.error(error);
-  } finally {
-    setLoading(false);
-  }
-};
-
-const loadData_sync = () => {
-  setLoading(true);
-  getProductos()
-    .then((data) => {
+    setLoading(true);
+    try {
+      const data = await getProductos();
       setProductos(data);
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error(error);
-    })
-    .finally(() => {
+    } finally {
       setLoading(false);
-    });
-};
+    }
+  };
 
-useEffect(() => {
-  loadData();
-}, []);
-  
+  const handleSelect = async (item: Producto) => {
+    setLoading(true);
+    try {
+      const data = await getProductos();
+      setProductos(data);
+      const actualizado = data.find((p: Producto) => p.id === item.id) || item;
+      setProductoSeleccionado(actualizado);
+      setModalVisible(true);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filtrar = productos.filter((item) =>
     item.name.toLowerCase().includes(filtro.toLowerCase())
@@ -67,71 +67,20 @@ useEffect(() => {
       <GalleryList
         data={filtrar}
         favoritos={favoritos}
-        onSelect={function (item) {
-          setProductoSeleccionado(item);
-          setModalVisible(true);
-        }}
+        onSelect={handleSelect}
         onFavorito={toggleFavorito}
         refreshing={loading}
         onRefresh_handler={loadData}
       />
 
-      {productoSeleccionado !== null && (
-        <Modal
-          visible={modalVisible}
-          animationType="fade"
-          onRequestClose={function () {
-            setModalVisible(false);
-          }}
-        >
-          <View style={styles.modalContainer}>
-            <Pressable
-              style={styles.closeButton}
-              onPress={function () {
-                setModalVisible(false);
-              }}
-            >
-              <Text style={styles.buttonText}>X Cerrar</Text>
-            </Pressable>
-
-            <Image
-              source={{uri: productoSeleccionado.image}}
-              style={styles.modalImage}
-              resizeMode={resizeMode}
-            />
-            <Text style={styles.modalTitle}>{productoSeleccionado.name}</Text>
-            <Text style={[styles.modalTitle, {color: 'green'}]}>${productoSeleccionado.price}</Text>
-            <Text>{productoSeleccionado.description}</Text>
-
-            <View style={styles.buttonsRow}>
-              <Pressable
-                style={styles.button}
-                onPress={function () {
-                  setResizeMode("cover");
-                }}
-              >
-                <Text style={styles.buttonText}>Cover</Text>
-              </Pressable>
-              <Pressable
-                style={styles.button}
-                onPress={function () {
-                  setResizeMode("contain");
-                }}
-              >
-                <Text style={styles.buttonText}>Contain</Text>
-              </Pressable>
-              <Pressable
-                style={styles.button}
-                onPress={function () {
-                  setResizeMode("stretch");
-                }}
-              >
-                <Text style={styles.buttonText}>Stretch</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
-      )}
+      <ProductModal
+        producto={productoSeleccionado}
+        visible={modalVisible}
+        onClose={async function () {
+          setModalVisible(false);
+          await loadData();
+        }}
+      />
     </View>
   );
 }
@@ -145,45 +94,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 50,
   },
-  modalContainer: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "white",
-    alignItems: "center",
-    marginTop: 50,
-  },
-  modalImage: { 
-    width: 250, 
-    height: 250, 
-    marginBottom: 15 
-    },
-
-  modalTitle: { 
-    fontSize: 20, 
-    fontWeight: "bold", 
-    marginBottom: 10 
-    },
-
-  buttonsRow: { 
-    flexDirection: "row", 
-    marginVertical: 10, 
-    gap: 10 
-    },
-
-  button: { 
-    backgroundColor: "#1b0075ff", 
-    padding: 10, 
-    borderRadius: 6 
-    },
-
-  closeButton: {
-    backgroundColor: "#c20000ff",
-    padding: 10,
-    borderRadius: 2,
-    alignSelf: "flex-start",
-    marginLeft: "20%"
-  },
-
-  buttonText: { color: "white", 
-    fontWeight: "bold" },
 });

@@ -55,7 +55,7 @@ export default function GalleryList({
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: "center",
+    alignSelf: "center", 
   },
   card: {
     margin: 10,
