@@ -1,8 +1,9 @@
 import GalleryList from "../components/Gallery";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
-import { getProductos, Producto } from "../data/itemData";
-import ProductModal from "../components/ProductModal"; // <-- nuevo import
+import { StyleSheet, TextInput, View, Pressable, Text } from "react-native";
+import { getProducts, Producto } from "../data/itemData";
+import ProductModal from "../components/ProductModal"; 
+import ProductAddModal from "../components/ProductAddModal"; 
 
 export default function Galeria() {
   const [filtro, setFiltro] = useState("");
@@ -10,6 +11,7 @@ export default function Galeria() {
   const [loading, setLoading] = useState(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [addModalVisible, setAddModalVisible] = useState(false); 
   const [favoritos, setFavoritos] = useState<number[]>([]);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export default function Galeria() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const data = await getProductos();
+      const data = await getProducts();
       setProductos(data);
     } catch (error) {
       console.error(error);
@@ -31,7 +33,7 @@ export default function Galeria() {
   const handleSelect = async (item: Producto) => {
     setLoading(true);
     try {
-      const data = await getProductos();
+      const data = await getProducts();
       setProductos(data);
       const actualizado = data.find((p: Producto) => p.id === item.id) || item;
       setProductoSeleccionado(actualizado);
@@ -55,14 +57,19 @@ export default function Galeria() {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        placeholder="Filtrar por título..."
-        style={styles.input}
-        value={filtro}
-        onChangeText={function (texto) {
-          setFiltro(texto);
-        }}
-      />
+      <View style={styles.filterRow}>
+        <TextInput
+          placeholder="Filtrar por título..."
+          style={styles.input}
+          value={filtro}
+          onChangeText={function (texto) {
+            setFiltro(texto);
+          }}
+        />
+        <Pressable style={styles.addButton} onPress={function () { setAddModalVisible(true); }}>
+          <Text style={styles.addButtonText}>+ AGREGAR</Text>
+        </Pressable>
+      </View>
 
       <GalleryList
         data={filtrar}
@@ -81,17 +88,35 @@ export default function Galeria() {
           await loadData();
         }}
       />
+
+      <ProductAddModal
+        visible={addModalVisible}
+        onClose={function () {
+          setAddModalVisible(false);
+        }}
+        onAdded={async function (nuevo: Producto) {
+          await loadData(); 
+          setAddModalVisible(false);
+        }}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 10, backgroundColor: "white" },
+  filterRow: { flexDirection: "row", alignItems: "center", gap: 8, marginTop: 50, marginBottom: 10 },
   input: {
+    flex: 1,
     borderWidth: 1,
     borderRadius: 8,
     padding: 8,
-    marginBottom: 10,
-    marginTop: 50,
   },
+  addButton: {
+    backgroundColor: "#1b0075ff",
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+  },
+  addButtonText: { color: "white", fontWeight: "bold" },
 });

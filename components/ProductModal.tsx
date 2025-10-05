@@ -14,7 +14,7 @@ export default function ProductModal({ producto, visible, onClose }: Props) {
   if (!producto) return null;
 
   return (
-    <Modal visible={visible} animationType="fade" onRequestClose={onClose}>
+    <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
       <View style={styles.modalContainer}>
         <Pressable
           style={styles.closeButton}
