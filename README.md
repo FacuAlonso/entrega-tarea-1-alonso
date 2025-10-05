@@ -1,3 +1,8 @@
+## IMPORTANTE - DB SETUP
+En el archivo db_conf.ts debe configurar la dirección de la base de datos:
+<img width="579" height="130" alt="image" src="https://github.com/user-attachments/assets/2670c953-2baf-4b94-b496-90862e139dd7" />
+
+----------------------------
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
